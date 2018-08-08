@@ -202,6 +202,10 @@ Since the states of all connections happening through the NAT are duplicated on 
 The NAT configuration on the firewalls can also provide port-forwarding if any services running on the LAN were desired to be accessible over the internet.  
 
 \section{ESXi Hosts}
+There are two ESXi Hosts in the environment that will be used to provide virtual machines for use by anyone that could find them useful. 
+There was discussion of hosting networks of virtual machines for students to practice routing and switching or securing the network for a security class. 
+Currently the networking is setup for only connecting to the existing subnet (10.123.18.0/24) and VMs that are connected to the ESXi's virtual switch will be given DHCP leases by default. 
+In the future VLANs can be utilized to provide more isolated virtual machine hosting and prevent any kind of issues that a student may cause configuring some networking within the environment.
 
 \newpage \section{References} \printbibliography[heading=none]
 \end{document}
