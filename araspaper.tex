@@ -1,19 +1,18 @@
 \documentclass[12pt]{IEEEtran}
 \usepackage{graphicx}
-\usepackage{blindtext}
 \usepackage{caption}
 \usepackage{float}
+\usepackage[style=ieee,backend=biber]{biblatex}
 \usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+\usepackage[english]{babel}
 \usepackage{pdfpages}
 
 % uncomment for double spacing
-%\usepackage{setspace}
-%\doublespace
+\usepackage{setspace}
+\onehalfspacing
 
-%\usepackage[english]{babel}
-%\usepackage[style=ieee,backend=biber]{biblatex}
 \usepackage[autostyle]{csquotes}
-%\addbibresource{policypaper.bib}
+\addbibresource{araspaper.bib}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -38,7 +37,11 @@ bakiesj@wit.edu, dunnm8@wit.edu, kapetanopoulose@wit.edu, ellabidym@wit.edu
 \newpage
 \clearpage
 
-\section{Serial Over Lan}
+\section{Goals}
+% make an overview of what we are trying to accomplish
+
+
+\section{Serial Over LAN}
 \subsection{ser2net}
 Ser2net is a daemon that opens a TCP or Telnet connection to the server's serial ports.
 After connecting all of the devices' communication ports to the Raspberry Pi ser2net allows for a single telnet connection to each device.
@@ -104,8 +107,77 @@ The final device name should look like like P1S1.
 
 \end{figure*}
 
-%\tableofcontents
-%\newpage
+\section{Routers}
 
-%\newpage \section{References} \printbibliography[heading=none]
+\subsection{Overview}
+The routers and firewalls for this environment are configured with the OPNsense firewall software \cite{opnsense}.
+The software is highly configurable and provides state of the art security and software that adds convenience and usability to the network.
+Many of the software packages available in OPNsense are utilized in the network in order to achieve the goals set out for this project.
+OPNsense is developed to be an easy-to-use firewall based on the FreeBSD project, it was designed to be able compete with the features present in commercial firewalls but using open source software.
+The OPNsense software is a fork of pfSense\cite{pfsense} that has a focus on timely security updates as well as code quality and security\cite{opnsenseabout}. 
+
+\subsection{Services}
+\subsubsection{DHCP Server}
+The DHCP server is meant to provide convenience to network users and admins.
+It will hand out addresses to new hardware added to the network for the ease of configuration. 
+Since a lot of software has some kind of web configuration the DHCP server allows us to connect to the web configuration to provide a static address if desired. 
+The pool of addresses handed out by the DHCP server is high numbered while the static addressed that are assigned to servers and software are low numbers. 
+The DHCP server also provides convenience when connecting to the network physically, there is no need to assign a computer connecting a static IP address. 
+
+\subsubsection{OpenVPN Server}
+The OpenVPN server is meant to allows students, admins, and professors to connect to the environment from anywhere on the internet. 
+It is setup as a remote access and uses a pre-shared key as well as a username and password combination for authentication.
+The usernames and passwords are configured through the OPNsense local database and can be managed through the OPNsense web configuration.
+OPNsense provides some useful features to manage accounts that will be helpful in this environment.
+As an example, the accounts can be set to expire which is useful when setting up a student account that will only have access for one semester. 
+OPNsense will automatically make the keys needed for a user to connect to the VPN server during account creation. 
+OPNsense also provides a wizard to export the OpenVPN configuration files necessary for a user to connect to the server. 
+Since the users are connecting with a username and password, logs can be audited to find out when a user was connecting if necessary. 
+
+\subsubsection{DNS Resolver}
+The DNS Resolver is another service that provides convenience for the users on this network. 
+We are utilizing the DNS resolver to simplify connecting to the hardware in the network as described in the Serial Over LAN section of this paper. 
+When connecting to the VPN the DNS server is specified upon connecting and this tells the clients to send any DNS traffic to our resolver. 
+Since the DNS traffic is coming to our firewall we are able to resolve hostnames for a local domain.
+We use this to provide a unique hostname for each IP address used in the ser2net configuration. 
+This means a user can use a descriptive name to connect to a specific router or switch in a specific pod very easily.
+Names are also provided for the hosts in the ESXi cluster, the remote management for the Dell hardware, the OPNsense firewalls themselves, and any hostnames specified in DHCP requests.
+
+\subsection{Redundancy}
+\subsubsection{CARP}
+The Common Address Redundancy protocol is utilized to provide an address that is shard between the two firewalls in the network.
+The firewalls have a shared address on both the WAN, 69.43.72.202, and the LAN, 10.123.18.1, as well as their own unique IP address on each network.
+Maverick's WAN interface has an IP address of 69.43.72.203, and it's LAN interface is 10.123.18.2.
+While Goose's WAN interface has 69.43.72.204, and it's LAN interface has 10.123.18.3. 
+The unique addresses are necessary in order to direct traffic needed to go to a specific host, such as pfSync or XMLRPC traffic, can still be routed correctly. 
+In the event of one of the firewalls becoming inoperable the other firewall will immediately take the responsibility of routing any traffic for the shared addresses.
+\subsubsection{pfSync}
+The pfSync protocol is responsible for synchronizing the connection states of any TCP or UDP connections being made through the firewall.
+This is to make sure connections can be resumed without interruption in the case of a firewall going down. 
+Without pfSync running the connections would have to be reset if the primary firewall went down. 
+\subsubsection{XMLRPC Sync}
+The responsibility of the XMLRPC synchronization is to sync the configuration of all the services from the primary firewall to the secondary as well as any state those servers are in.
+The primary firewall will continually update the secondary firewall with any changes in configuration to any services as well as any state that the running services are in.
+If the primary firewall were to go down the secondary firewall is able to immediately replicate any of those services. 
+This service syncs all of the services we are utilizing in the firewall. 
+\begin{itemize}
+\item Local Database Users and Groups
+\item Certificates, used by the VPN and web configuration
+\item Firewall and NAT rules
+\item DHCP configuration and states
+\item Any defined routes in the routing table
+\item CARP configuration and virtual IP addresses
+\item Custom DNS entries
+\item OpenVPN configuration
+\end{itemize}
+
+\subsubsection{NAT}
+The firewalls in this environment provide a NAT service like most routers to provide hosts on the LAN to have connections with any address on the internet. 
+The NAT rules were written manually in order to use the shared address in the CARP setup to provide a redundant path to the internet for the hosts on the LAN.
+Since the states of all connections happening through the NAT are duplicated on the other router using pfSync, described earlier, the connections with the internet are not interrupted in the case of a firewall going down. 
+The NAT configuration on the firewalls can also provide port-forwarding if any services running on the LAN were desired to be accessible over the internet.  
+
+\section{ESXi Hosts}
+
+% \newpage \section{References} \printbibliography[heading=none]
 \end{document}
