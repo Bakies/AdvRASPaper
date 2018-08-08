@@ -34,12 +34,26 @@ bakiesj@wit.edu, dunnm8@wit.edu, kapetanopoulose@wit.edu, ellabidym@wit.edu
 } 
 
 \maketitle
-\newpage
 \clearpage
 
 \section{Goals}
 % make an overview of what we are trying to accomplish
 
+\section{Network Design}
+The network design consists of two firewall routers, a switch, Raspberry Pi, and two ESXi clusters.
+Each router has a connection to the internet with their own IP address and a shared IP address for redundancy with CARP.
+The routers have the same setup for the internet network as well.
+It is good practice to have a dedicated line between the routers so they can synchronize routing tables and other data for a seamless transition should one of the routers fail.
+Unfortunately, both of the routers have a broken NIC, so we have to rely on synchronizing over LAN.
+Although this isn't best practice, it is still a reliable way to set up redundancy.
+
+
+
+\begin{figure*}[t]
+	\centering
+	\includegraphics[width=\textwidth]{topology.png}
+	\caption{Network Topology}
+\end{figure*}
 
 \section{Serial Over LAN}
 \subsection{ser2net}
@@ -56,7 +70,8 @@ The devices in the /dev directory are named by the order in which they are plugg
 The default ser2net config file is located at /etc/ser2net.conf.
 The configuration file defines all of the connections ser2net provides.
 An example of connection for this SoL project is \textit{192.168.1.12,5560:telnet:0:/dev/ttyUSB1:9600 8DATABITS NONE P5R3 remctl}.
-It is broken into parts \textit{\textless network port\textgreater :\textless state\textgreater :\textless timeout \textgreater :\textless device\textgreater :\textless options \textgreater}.
+It is broken into parts \textit{\textless network port\textgreater :\textless state\textgreater :\textless timeout \textgreater :\textless device\textgreater :\textless options \textgreater} 
+\cite{ser}.
 The network port defines the end point a user will use to connect to the serial port.
 The state option is used to determine the protocol used to communicate with the serial port.
 The third option is the timeout in seconds.
@@ -99,6 +114,15 @@ Starting at the top most device in the front facing door (away from the server r
 The devices are designated with an S if it is a switch, and an R if it is a router.
 The final device name should look like like P1S1.
 
+\subsection{Raspberry Pi}
+The Raspberry Pi acts as the SoL server.
+It is running the ser2net daemon and hosts all the connection to the serial devices.
+For ease of use for the user, the Raspberry Pi has a virtual interface for each device with its own IP address.
+Each of these addresses is given a hostname by the DNS server on the router.
+This allows the user to telnet to the device by the given device name described in the Naming Scheme section rather than the IP address.
+On the Pi is a bash script to make setup simple for the sysadmin.
+This script creates a ser2net configuration file, creates all the virtual interfaces, and makes a file containing all the IP address mapped to the correct device name.
+More documentation of the script will be supplied in the the actual an on the git repo.
 
 \begin{figure*}[t]
 	\centering
@@ -114,7 +138,7 @@ The routers and firewalls for this environment are configured with the OPNsense 
 The software is highly configurable and provides state of the art security and software that adds convenience and usability to the network.
 Many of the software packages available in OPNsense are utilized in the network in order to achieve the goals set out for this project.
 OPNsense is developed to be an easy-to-use firewall based on the FreeBSD project, it was designed to be able compete with the features present in commercial firewalls but using open source software.
-The OPNsense software is a fork of pfSense\cite{pfsense} that has a focus on timely security updates as well as code quality and security\cite{opnsenseabout}. 
+The OPNsense software is a fork of pfSense \cite{pfsense} that has a focus on timely security updates as well as code quality and security \cite{opnsenseabout}. 
 
 \subsection{Services}
 \subsubsection{DHCP Server}
@@ -179,5 +203,5 @@ The NAT configuration on the firewalls can also provide port-forwarding if any s
 
 \section{ESXi Hosts}
 
-% \newpage \section{References} \printbibliography[heading=none]
+\newpage \section{References} \printbibliography[heading=none]
 \end{document}

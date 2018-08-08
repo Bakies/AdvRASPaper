@@ -19,13 +19,40 @@
 
 \refsection{0}
   \sortlist[entry]{none/global/}
-    \entry{opnsense}{online}{}
+    \entry{ser}{online}{}
       \field{sortinit}{1}
       \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
       \field{labeltitlesource}{title}
-      \field{title}{OPNsense\x{fffd}\x{fffd} - Open Source Firewall - High-end Security Made Easy\x{fffd}\x{fffd}\x{fffd}}
+      \field{title}{Serial to Network Proxy}
+      \verb{url}
+      \verb http://ser2net.sourceforge.net/
+      \endverb
+    \endentry
+    \entry{opnsense}{online}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labeltitlesource}{title}
+      \field{title}{OPNsense - Open Source Firewall - High-end Security Made Easy}
       \verb{url}
       \verb https://opnsense.org/
+      \endverb
+    \endentry
+    \entry{pfsense}{online}{}
+      \field{sortinit}{3}
+      \field{sortinithash}{a4b52e5432884761f50fb9571273b93e}
+      \field{labeltitlesource}{title}
+      \field{title}{pfSense - World's Most Trusted Open Source Firewall}
+      \verb{url}
+      \verb https://pfsense.org/
+      \endverb
+    \endentry
+    \entry{opnsenseabout}{online}{}
+      \field{sortinit}{4}
+      \field{sortinithash}{11cdaee3b18e01d77f3f428b13c1fc76}
+      \field{labeltitlesource}{title}
+      \field{title}{About OPNsense}
+      \verb{url}
+      \verb https://opnsense.org/about/about-opnsense
       \endverb
     \endentry
   \endsortlist
