@@ -2120,5 +2120,7 @@
   </bcf:bibdata>
   <bcf:section number="0">
     <bcf:citekey order="1">opnsense</bcf:citekey>
+    <bcf:citekey order="2">pfsense</bcf:citekey>
+    <bcf:citekey order="3">opnsenseabout</bcf:citekey>
   </bcf:section>
 </bcf:controlfile>
