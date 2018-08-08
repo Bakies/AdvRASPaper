@@ -38,8 +38,28 @@ bakiesj@wit.edu, dunnm8@wit.edu, kapetanopoulose@wit.edu, ellabidym@wit.edu
 \newpage
 \clearpage
 
-\section{This is a test}
-\blindtext
+\section{Serial Over Lan}
+\subsection{ser2net}
+Ser2net is a daemon that opens a TCP or Telnet connection to the server's serial ports.
+After connecting all of the devices' communication ports to the Raspberry Pi ser2net allows for a single telnet connection to each device.
+There are some nuances that come along with this daemon.
+Ser2net does not provide a service for SSH, so the communication between the user and the device will be unencrypted.
+Although SSH would be preferred, a telnet connection is acceptable because in order to access the Serial over LAN (SoL) a user has to VPN into the network.
+The only way to access the network is physically or via a secure connection.
+Another nuance is the configuration.
+The way ser2net opens a connection to the serial ports is by the device in the /dev directory.
+The devices in the /dev directory are named by the order in which they are plugged in, meaning the needs to be an order in which they are plugged in.
+\subsubsection{Installation}
+ser2net is available on the apt package manger, so install is simple.
+
+\textit{apt install ser2net}
+\subsection{USB hub}
+The USB hub is used to limit the wires run to the server room.
+All of the devices in the pod are connected to the USB hub.
+In order to constantly have the same device number, the devices need to be plugged in a specific configuration.
+
+
+
 \section{This is a test}
 \blindtext
 \section{This is a test}
