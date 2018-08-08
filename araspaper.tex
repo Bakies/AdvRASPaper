@@ -3,17 +3,17 @@
 \usepackage{blindtext}
 \usepackage{caption}
 \usepackage{float}
+\usepackage[style=ieee,backend=biber]{biblatex}
 \usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+\usepackage[english]{babel}
 \usepackage{pdfpages}
 
 % uncomment for double spacing
 %\usepackage{setspace}
 %\doublespace
 
-%\usepackage[english]{babel}
-%\usepackage[style=ieee,backend=biber]{biblatex}
 \usepackage[autostyle]{csquotes}
-%\addbibresource{policypaper.bib}
+\addbibresource{araspaper.bib}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -60,9 +60,34 @@ In order to constantly have the same device number, the devices need to be plugg
 
 
 
-\section{This is a test}
+\section{Routers}
+
+\subsection{Overview}
+The routers and firewalls for this environment are configured with the OPNsense firewall software \cite{opnsense}. The software is highly configurable and made to provide state of the art software 
+
+\subsection{Services}
 \blindtext
-\section{This is a test}
+\subsubsection{DHCP Server}
+\blindtext
+\subsubsection{OpenVPN Server}
+\blindtext
+\subsubsection{DNS Resolver}
+\blindtext
+\subsubsection{NAT}
+\blindtext
+\subsubsection{Firewall}
+\blindtext
+
+\subsection{Redundancy}
+\subsubsection{CARP}
+\blindtext
+\subsubsection{pfSync}
+\blindtext
+\subsubsection{XMLRPC Sync}
+\blindtext
+
+
+\section{ESXi Hosts}
 \blindtext
 \section{This is a test}
 \blindtext
