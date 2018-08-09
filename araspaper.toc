@@ -1,0 +1,47 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\select@language {english}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {I}Goals}{2}{section.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {II}Network Design}{2}{section.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {III}Serial Over LAN}{2}{section.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-A}}ser2net}{2}{subsection.3.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {III-A}1}Configuration}{2}{subsubsection.3.1.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {III-A}2}Installation}{2}{subsubsection.3.1.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-B}}USB hub}{2}{subsection.3.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-C}}USB-RJ45 Converter}{3}{subsection.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-D}}Naming Scheme}{3}{subsection.3.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-E}}Raspberry Pi}{4}{subsection.3.5}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {IV}Routers}{4}{section.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}}Overview}{4}{subsection.4.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}}Services}{4}{subsection.4.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}1}DHCP Server}{4}{subsubsection.4.2.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}2}OpenVPN Server}{4}{subsubsection.4.2.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}3}DNS Resolver}{5}{subsubsection.4.2.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}}Redundancy}{5}{subsection.4.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}1}CARP}{5}{subsubsection.4.3.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}2}pfSync}{5}{subsubsection.4.3.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}3}XMLRPC Sync}{6}{subsubsection.4.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}4}NAT}{6}{subsubsection.4.3.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {V}ESXi Hosts}{6}{section.5}
